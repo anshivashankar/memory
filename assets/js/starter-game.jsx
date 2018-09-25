@@ -144,20 +144,6 @@ class Memory extends React.Component {
                         clickCard={this.onClickCard.bind(this)} />;
   }
 
-  renderCards() {
-    let i, j;
-    let count = 0;
-    let returnString = "";
-    for(i = 0; i != 4; i++) {
-      returnString +='<div> className="row"';
-      for(j = 0; j != 4; j++) {
-        returnString+='{this.renderCard(' + count + ')}';
-        count++;
-      }
-      returnString += '</div>';
-    }
-  }
-
   render() {
     return (
     <div>
