@@ -3,7 +3,7 @@ server {
     listen [::]:80;
 
     # TODO: This should be your server name.
-    server_name memory.ironbeard.com;
+    server_name memory1.shivashnkar.com;
 
     location / {
         proxy_pass http://localhost:4791;

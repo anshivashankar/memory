@@ -2,20 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
-
-// UPDATE THIS IF WE NEED DESIGN CHANGES
-// App state for memory game is:
-// {
-//   all of the cards: Card ( 4x4 grid )
-//   Card has:
-//     letter: String of 1 character (A-H)
-//     completed: Boolean (this handles what is hidden and what isn't)
-//     pos: [Integer, Integer] (its position on board)
-//     guessed: Boolean - if we're guessing this one.
-//   NumClicks: Integer
-// }
-
-
 export default function game_init(root) {
   ReactDOM.render(<Memory />, root);
 }
@@ -23,13 +9,14 @@ export default function game_init(root) {
 
 class Memory extends React.Component {
 
-  // returns a 4x4 list of cards
-  // cards have:
-  //  - letter
-  //  - pos
-  //  - completed
-  //  - guessed
-  // add all of those here.
+  constructor(props) {
+    super(props);
+    this.state = {
+      cards: this.randomizeCards(), // list of Card
+      numClicks: 0,
+    };
+  }
+
   randomizeCards() {
     let cards = [];
     let x, y;
@@ -46,14 +33,6 @@ class Memory extends React.Component {
       }
     }
     return cards;
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      cards: this.randomizeCards(), // list of Card
-      numClicks: 0,
-    };
   }
 
   getNumClicks() {
@@ -73,8 +52,10 @@ class Memory extends React.Component {
   }
 
   onClickCard(pos, index) {
-    // do nothing on click.
-    if(this.state.cards[index].complete) {
+    // do nothing on click if the cards are completed.
+    if(this.state.cards[index].completed || 
+       this.getNumberOfGuesses() == 2 ||
+       this.state.cards[index].guessed) {
       return;
     }
     this.markFlipped(index);
@@ -128,6 +109,18 @@ class Memory extends React.Component {
     return -1;
   }
 
+  getNumberOfGuesses() {
+    let guessedCount = 0;
+    let i;
+    for(i = 0; i != 16; i++) {
+      if(this.state.cards[i].guessed == true) {
+        guessedCount++;
+      }
+    }
+    return guessedCount;
+  }
+
+  // set all guessed to false.
   setGuessedToFalse() {
     let xs = _.map(this.state.cards, (card) => {
       return _.extend(card, {guessed: false});
@@ -187,8 +180,8 @@ function DisplayCard(params) {
   let flipped = params.card.guessed || params.card.completed;
   let pos = params.card.pos;
   if(flipped == true) {
-  return <button onClick={() => params.clickCard(pos, params.number)}> [{letter}]  </button>;
+  return <button class="buttonAnswer" onClick={() => params.clickCard(pos, params.number)}> [{letter}]  </button>;
   }
-  return <button onClick={() => params.clickCard(pos, params.number)}> [??] </button>;
+  return <button class="buttonGuess" onClick={() => params.clickCard(pos, params.number)}> [??] </button>;
 }
 

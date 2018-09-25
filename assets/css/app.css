@@ -6,4 +6,22 @@
     padding-top: 10ex;
     text-align: center;
 }
+.buttonGuess {
+  width: 150px;
+  height: 90px;
+  text-align: center;
+  margin: 10px 20px;
+  font-size: 25px;
+  line-height: 60px;
+}
 
+.buttonAnswer {
+  width: 150px;
+  height: 90px;
+  text-align: center;
+  margin: 10px 20px;
+  font-size: 25px;
+  line-height: 60px;
+  color: black;
+  background-color: white;
+}
