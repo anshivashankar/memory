@@ -35,6 +35,15 @@ class Memory extends React.Component {
     return cards;
   }
 
+  resetState() {
+    let cards = this.randomizeCards();
+    let xs = {
+      cards: cards,
+      numClicks: 0,
+      };
+    this.setState(xs);
+  }
+
   getNumClicks() {
     return this.state.numClicks;
   }
@@ -135,9 +144,26 @@ class Memory extends React.Component {
                         clickCard={this.onClickCard.bind(this)} />;
   }
 
+  renderCards() {
+    let i, j;
+    let count = 0;
+    let returnString = "";
+    for(i = 0; i != 4; i++) {
+      returnString +='<div> className="row"';
+      for(j = 0; j != 4; j++) {
+        returnString+='{this.renderCard(' + count + ')}';
+        count++;
+      }
+      returnString += '</div>';
+    }
+  }
+
   render() {
     return (
     <div>
+      <div className="column">
+        <button onClick={this.resetState.bind(this)}>Reset</button>
+      </div>
       <div className="row">
         <h2>Memory Game</h2>
       </div>
@@ -180,8 +206,8 @@ function DisplayCard(params) {
   let flipped = params.card.guessed || params.card.completed;
   let pos = params.card.pos;
   if(flipped == true) {
-  return <button class="buttonAnswer" onClick={() => params.clickCard(pos, params.number)}> [{letter}]  </button>;
+  return <button className="buttonAnswer" onClick={() => params.clickCard(pos, params.number)}> [{letter}]  </button>;
   }
-  return <button class="buttonGuess" onClick={() => params.clickCard(pos, params.number)}> [??] </button>;
+  return <button className="buttonGuess" onClick={() => params.clickCard(pos, params.number)}> [??] </button>;
 }
 
