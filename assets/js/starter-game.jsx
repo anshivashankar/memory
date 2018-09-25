@@ -12,31 +12,31 @@ class Memory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: this.randomizeCards(), // list of Card
+      cards: this.resetCards(), // list of Card
       numClicks: 0,
     };
   }
 
-  randomizeCards() {
+  resetCards() {
     let cards = [];
     let x, y;
     let count = 0;
     let letters = ["A", "A", "B", "B", "C", "C", "D", "D", "E", "E", "F", "F", "G", "G", "H", "H"];
-    letters  = _.shuffle(letters);
     for(x = 0; x != 4; x++) {
       for(y = 0; y != 4; y++) {
         cards[count] = { letter: letters.pop(), 
-                      pos: [x, y],
+                      pos: [x, y], // our identifier
                       completed: false,
                       guessed: false};
         count++;
       }
     }
+    cards = _.shuffle(cards);
     return cards;
   }
 
   resetState() {
-    let cards = this.randomizeCards();
+    let cards = this.resetCards();
     let xs = {
       cards: cards,
       numClicks: 0,
