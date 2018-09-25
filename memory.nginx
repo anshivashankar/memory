@@ -2,8 +2,8 @@ server {
     listen 80;
     listen [::]:80;
 
-    # TODO: This should be your server name.
-    server_name memory1.shivashnkar.com;
+    # TODO - DONE: This should be your server name.
+    server_name memory1.shivashankar.net;
 
     location / {
         proxy_pass http://localhost:4791;

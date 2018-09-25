@@ -9,7 +9,7 @@ _build/prod/rel/memory/bin/memory stop || true
 
 echo "Starting app..."
 
-# TODO: You want start.
+# TODO - DONE: You want start.
 
 _build/prod/rel/memory/bin/memory start
 
